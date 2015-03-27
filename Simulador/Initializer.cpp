@@ -101,12 +101,11 @@ void crearPuertas(){
         
         Logger::logg("Creando el proceso puerta");
         //preparo los parametros para la puerta
-        static const char* parametro = PARAM_PUERTA[i]; //preguntar como pasar bien esto
         if ((childpid=fork())<0){
             Logger::loggError(string("Error al crear la puerta nro ") + PARAM_PUERTA[i]);
             exit(1);   
         }else if (childpid == 0){
-            execlp(PATH_PUERTA_EXEC,"Puerta",parametro,(char*)NULL);
+            execlp(PATH_PUERTA_EXEC,"Puerta",PARAM_PUERTA[i],(char*)NULL);
             Logger::loggError(string("Error al cargar la imagen de ejecutable en la puerta nro ") + PARAM_PUERTA[i]);
             exit(1);
         }

@@ -53,11 +53,13 @@ Puerta: carpetas
 carpetas:
 	mkdir -p $(RELEASE)
 	mkdir -p $(OBJECTS)
+	cp ./IPC_RM.sh $(RELEASE)
 
 
 clean:
 	rm -f -r $(RELEASE)
 	rm -f -r $(OBJECTS)
+	./IPC_RM.sh
 
 $(PROYECTO): $(PROCESOS)
 	

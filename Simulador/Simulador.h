@@ -23,11 +23,6 @@ static const int  PUERTA_FILA[2] = {102,104};
 static const int  PUERTA_RESP[2] = {103,105};
 
 
-
-
-
-
-
 typedef struct {
     bool estaAbierto;
     int personasAdentro;
