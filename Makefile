@@ -3,32 +3,47 @@
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #parametros generales
 PARAMETROS = g++ -Wall -g
+PROYECTO = Simulador
 PROYECT = .
 RELEASE = $(PROYECT)/Release
 OBJECTS = $(PROYECT)/Objects
-PROCESOS = initializer puerta
+PROCESOS = Initializer Puerta
 SRC = ./Simulador
 
 #parametros para la compilacion del proceso initializer
-PATH_INIT = ./Simulador
 OBJETOS_INIT = semaforo.o Logger.o
-INIT_SOURCE = initializer.cpp
-INIT_EXE = initializer
+INIT_SOURCE = Initializer.cpp
+INIT_EXE = Initializer
+
+#parametros para la compilacion del proceso initializer
+OBJETOS_PUERTA = semaforo.o Logger.o
+PUERTA_SOURCE = Puerta.cpp
+PUERTA_EXE = Puerta
+
 
 all: $(PROYECTO)
 
 #////////////////////////INITIALIZER////////////////////
-initializer: carpetas
+Initializer: carpetas
 	@echo
-	#-----------compilando ninio-----------
+	#-----------compilando-----------
 	@echo 
 	#1.compilando dependencias
-	for i in $(OBJETOS_INIT); do $(PARAMETROS) -c $(PATH_INIT)/$${i%.*}.cpp $(OBJECTS);done 
-	#2.creando ejecutable ninio
-	#$(PARAMETROS) $(OBJETOS_INIT) $(PATH_INIT)/$(INIT_SOURCE) -o $(RELEASE)/$(INIT_EXE)
+	for i in $(OBJETOS_INIT); do $(PARAMETROS) $(SRC)/$${i%.*}.cpp -c -o $(OBJECTS)/$$i;done 
+	#2.creando ejecutable
+	var="";for i in $(OBJETOS_INIT); do var="$$var $(OBJECTS)/$$i";done;$(PARAMETROS) $$var $(SRC)/$(INIT_SOURCE) -o $(RELEASE)/$(INIT_EXE)
 
-	#3.eliminando archivos temporales
-	#rm -f $(OBJETOS_NINIO)
+#////////////////////////Puerta////////////////////
+Puerta: carpetas
+	@echo
+	#-----------compilando-----------
+	@echo 
+	#1.compilando dependencias
+	for i in $(OBJETOS_PUERTA); do $(PARAMETROS) $(SRC)/$${i%.*}.cpp -c -o $(OBJECTS)/$$i;done 
+	#2.creando ejecutable
+	var="";for i in $(OBJETOS_PUERTA); do var="$$var $(OBJECTS)/$$i";done;$(PARAMETROS) $$var $(SRC)/$(PUERTA_SOURCE) -o $(RELEASE)/$(PUERTA_EXE)
+
+
 
 
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -36,12 +51,13 @@ initializer: carpetas
 #+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 carpetas:
-	mkdir -p $(RELEASE)mak
+	mkdir -p $(RELEASE)
 	mkdir -p $(OBJECTS)
 
 
-clean: clear
-	rm -f -r $(RELEASE) *.o
+clean:
+	rm -f -r $(RELEASE)
+	rm -f -r $(OBJECTS)
 
 $(PROYECTO): $(PROCESOS)
 	
