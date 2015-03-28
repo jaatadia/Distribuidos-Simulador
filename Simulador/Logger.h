@@ -8,7 +8,7 @@
 #ifndef LOGGER_H
 #define	LOGGER_H
 
-#define LOGGER_DEFAULT_PATH  "./log.txt"
+
 
 #include <iostream>
 #include <string>

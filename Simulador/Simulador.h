@@ -8,6 +8,13 @@
 #ifndef SIMULADOR_H
 #define	SIMULADOR_H
 
+#define MUSEO_CONF "./museo.cfg"
+#define MUSEO_OPEN "MUSEO_OPEN"
+#define MUSEO_CANT "MUSEO_CANT"
+
+#define LOGGER_DEFAULT_PATH  "./log.txt"
+
+
 #define DIRECTORIO_IPC "/home/knoppix/Atadia/Simulador"
 #define PERMISOS 0660
 

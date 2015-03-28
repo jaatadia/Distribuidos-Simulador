@@ -21,6 +21,7 @@
 #include "Simulador.h"
 #include "Logger.h"
 #include "semaforo.h"
+#include "Parser.h"
 
 using namespace std;
 
@@ -55,8 +56,20 @@ void crearMuseo(){
     
     //TODO cargar configuracion de memoria un archivo
     Logger::logg("Inicializando la memoria compartida");
-    myMuseum->estaAbierto=false;
-    myMuseum->personasAdentro=0;
+    Parser par = Parser(MUSEO_CONF);
+    int result;
+    
+    if((result = par.getBoolParam(MUSEO_OPEN)) < 0 ){
+        Logger::loggError("Error al leer la configuracion del museo si esta abierto");
+        exit(1);   
+    }
+    myMuseum->estaAbierto= (result == BOOL_TRUE);
+    
+    if((result = par.getBoolParam(MUSEO_OPEN)) < 0 ){
+        Logger::loggError("Error al leer la configuracion del museo cuantas personas hay");
+        exit(1);   
+    }
+    myMuseum->personasAdentro=result;
     
     Logger::logg("Desuniendose de la memoria compartida");
     if(shmdt(myMuseum)==-1){
