@@ -10,7 +10,7 @@
 
 #define MUSEO_CONF "./museo.cfg"
 #define MUSEO_OPEN "MUSEO_OPEN"
-#define MUSEO_CANT "MUSEO_CANT"
+#define MUSEO_CANT_GENTE "MUSEO_CANT"
 #define MUSEO_PUERTAS "MUSEO_PUERTAS"
 
 #define LOGGER_DEFAULT_PATH  "./log.txt"
