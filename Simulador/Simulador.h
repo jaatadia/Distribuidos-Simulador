@@ -11,23 +11,19 @@
 #define MUSEO_CONF "./museo.cfg"
 #define MUSEO_OPEN "MUSEO_OPEN"
 #define MUSEO_CANT "MUSEO_CANT"
+#define MUSEO_PUERTAS "MUSEO_PUERTAS"
 
 #define LOGGER_DEFAULT_PATH  "./log.txt"
-
-
+#define PATH_PUERTA_EXEC "./Puerta"
 #define DIRECTORIO_IPC "/home/knoppix/Atadia/Simulador"
+
 #define PERMISOS 0660
 
 
 #define MUSEO 100
 #define MUTEX 101
-
-#define PATH_PUERTA_EXEC "./Puerta"
-#define CANT_PUERTAS 2
-
-static const int  PUERTA_FILA[2] = {102,104};
-static const int  PUERTA_RESP[2] = {103,105};
-static const char*  PARAM_PUERTA[2] = {"0","1"};
+#define PUERTA_FILA 102 //las sucesivas puertas van a tener PUERTA_FILE + 2 * nro_puerta
+#define PUERTA_RESP 103 //las sucesivas puertas van a tener PUERTA_RESP + 2 * nro_puerta
 
 typedef struct {
     bool estaAbierto;

@@ -23,7 +23,7 @@ using namespace std;
 
 //en arv[1] el numero de puerta
 int main(int argc, char** argv) {
-    if ((argc == 1) || (atoi(argv[1]) < 0) || (atoi(argv[1])>=CANT_PUERTAS)){
+    if (argc == 1){
         Logger::startLog(LOGGER_DEFAULT_PATH,PUERTA_ID);
         Logger::loggError("No se paso el numero de puerta correcto como parametro");
         exit(1);
@@ -57,13 +57,13 @@ int main(int argc, char** argv) {
     //busco las colas
     Logger::logg("Buscando la cola de entrada");
     int colaEntrada,colaRespuesta;
-    if( (colaEntrada = msgget(ftok(DIRECTORIO_IPC,PUERTA_FILA[numero]),PERMISOS)) == -1){
+    if( (colaEntrada = msgget(ftok(DIRECTORIO_IPC,PUERTA_FILA + 2 * numero),PERMISOS)) == -1){
         Logger::loggError("Error al encontrar la cola de entrada");
         exit(1);   
     }
 
     Logger::logg("Buscando la cola de respuesta");
-    if( (colaRespuesta = msgget(ftok(DIRECTORIO_IPC,PUERTA_RESP[numero]),PERMISOS)) == -1){
+    if( (colaRespuesta = msgget(ftok(DIRECTORIO_IPC,PUERTA_RESP + 2 * numero),PERMISOS)) == -1){
         Logger::loggError("Error al encontrar la cola de respuesta");
         exit(1);   
     }

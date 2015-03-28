@@ -17,6 +17,8 @@
 
 #include "Parser.h"
 
+std::string Parser::path="";
+
 std::string getLine(std::string path, std::string keyword, int* result){
     std::string line;
     std::ifstream in(path.c_str());
@@ -36,13 +38,13 @@ std::string getLine(std::string path, std::string keyword, int* result){
     return "";
 }
 
-Parser::Parser(const char* path){
-    this->path = path;
+void Parser::setPath(const char* path){
+    Parser::path = path;
 }
 
 int Parser::getBoolParam(std::string keyword){
     int result=0;
-    std::string line = getLine(this->path,keyword,&result);
+    std::string line = getLine(Parser::path,keyword,&result);
     if(result<0) return result;
     if(line.find("true")!=std::string::npos) { return BOOL_TRUE;}
     if(line.find("false")!=std::string::npos) { return BOOL_FALSE;}
@@ -52,9 +54,12 @@ int Parser::getBoolParam(std::string keyword){
 
 int Parser::getIntParam(std::string keyword){
     int result=0;
-    std::string line = getLine(this->path,keyword,&result);
+    std::string line = getLine(Parser::path,keyword,&result);
     if(result < 0) return result;
     return atoi(line.substr(line.find(":")+1).c_str());
+}
+
+Parser::Parser() {
 }
 
 Parser::~Parser() {

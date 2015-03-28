@@ -18,13 +18,14 @@
 
 class Parser {
 public:
-    Parser(const char* path);
-    int getBoolParam(std::string path);
-    int getIntParam(std::string path);
+    Parser();
+    static void setPath(const char* path);
+    static int getBoolParam(std::string key);
+    static int getIntParam(std::string key);
     virtual ~Parser();
     
 private:
-    std::string path;
+    static std::string path;
 };
 
 #endif	/* PARSER_H */

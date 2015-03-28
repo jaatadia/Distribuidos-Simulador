@@ -56,16 +56,16 @@ void crearMuseo(){
     
     //TODO cargar configuracion de memoria un archivo
     Logger::logg("Inicializando la memoria compartida");
-    Parser par = Parser(MUSEO_CONF);
+    
     int result;
     
-    if((result = par.getBoolParam(MUSEO_OPEN)) < 0 ){
+    if((result = Parser::getBoolParam(MUSEO_OPEN)) < 0 ){
         Logger::loggError("Error al leer la configuracion del museo si esta abierto");
         exit(1);   
     }
     myMuseum->estaAbierto= (result == BOOL_TRUE);
     
-    if((result = par.getBoolParam(MUSEO_OPEN)) < 0 ){
+    if((result = Parser::getBoolParam(MUSEO_OPEN)) < 0 ){
         Logger::loggError("Error al leer la configuracion del museo cuantas personas hay");
         exit(1);   
     }
@@ -96,34 +96,40 @@ void crearMuseo(){
 void crearPuertas(){
     //todo cargar cantidad de puertas desde archivo
     int childpid;
-    for (int i=0;i<CANT_PUERTAS;i++){
-        
-        Logger::logg(string("Creando la puerta nro ")+PARAM_PUERTA[i]);
+    int result = 0;
+    if((result = Parser::getIntParam(MUSEO_PUERTAS)) < 0 ){
+        Logger::loggError("Error al leer la configuracion de la cantidad de puertas");
+        exit(1);   
+    }
+    
+    for (int i=0;i<result;i++){
+        std::stringstream ss;
+        ss<<i;
+        Logger::logg(string("Creando la puerta nro ")+ss.str());
         
         //creo las colas para la puerta
         Logger::logg("Creando la cola de entrada");
         int cola;
-        if( (cola = msgget(ftok(DIRECTORIO_IPC,PUERTA_FILA[i]),IPC_CREAT|IPC_EXCL|PERMISOS)) == -1){
+        if( (cola = msgget(ftok(DIRECTORIO_IPC,PUERTA_FILA + 2*i),IPC_CREAT|IPC_EXCL|PERMISOS)) == -1){
             Logger::loggError("Error al crear la cola de entrada");
             exit(1);   
         }
         
         Logger::logg("Creando la cola de respuesta");
-        if( (cola = msgget(ftok(DIRECTORIO_IPC,PUERTA_RESP[i]),IPC_CREAT|IPC_EXCL|PERMISOS)) == -1){
+        if( (cola = msgget(ftok(DIRECTORIO_IPC,PUERTA_RESP +2*i),IPC_CREAT|IPC_EXCL|PERMISOS)) == -1){
             Logger::loggError("Error al crear la cola de respuesta");
             exit(1);   
         }
-        
         
         //TODO Preguntar sobre el pasaje del parametro
         Logger::logg("Creando el proceso puerta");
         //preparo los parametros para la puerta
         if ((childpid=fork())<0){
-            Logger::loggError(string("Error al crear la puerta nro ") + PARAM_PUERTA[i]);
+            Logger::loggError(string("Error al crear la puerta nro ") + ss.str());
             exit(1);   
         }else if (childpid == 0){
-            execlp(PATH_PUERTA_EXEC,"Puerta",PARAM_PUERTA[i],(char*)NULL);
-            Logger::loggError(string("Error al cargar la imagen de ejecutable en la puerta nro ") + PARAM_PUERTA[i]);
+            execlp(PATH_PUERTA_EXEC,"Puerta",ss.str().c_str(),(char*)NULL);
+            Logger::loggError(string("Error al cargar la imagen de ejecutable en la puerta nro ") + ss.str());
             exit(1);
         }
     }
@@ -136,12 +142,14 @@ void crearClientes(){
 
 #define INITIALIZER_ID "Initializer"
 int main(int argc, char** argv) {
-    
+    Parser::setPath(MUSEO_CONF);
     Logger::startLog(LOGGER_DEFAULT_PATH,INITIALIZER_ID);
+    
     crearCarpeta();
     crearMuseo();
     crearPuertas();
     crearClientes();
+    
     Logger::closeLogger();
     
     return 0;
