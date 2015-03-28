@@ -22,12 +22,7 @@ using namespace std;
  * 
  */
 
-
-#define DESTROYER_ID "Destroyer"
-int main(int argc, char** argv) {
-    
-    Logger::startLog(LOGGER_DEFAULT_PATH,DESTROYER_ID);
-    Parser::setPath(MUSEO_CONF);
+void killIPCs(){
     
     Logger::logg("Eliminando el semaforo de Mutex");
     int semid;
@@ -73,7 +68,21 @@ int main(int argc, char** argv) {
             }
             
         }
-    }
+    }   
+}
+
+void killProcess(){
+    system("var=`ps -e | grep Puerta | sed 's-^[^0-9]\\+\\([0-9]\\+\\)[^0-9]\\+.*$-\\1-g'`;for i in $var;do kill $i;done ");
+}
+
+
+#define DESTROYER_ID "Destroyer"
+int main(int argc, char** argv) {
     
+    Logger::startLog(LOGGER_DEFAULT_PATH,DESTROYER_ID);
+    Parser::setPath(MUSEO_CONF);
+    
+    killIPCs();
+    killProcess();
 }
 
