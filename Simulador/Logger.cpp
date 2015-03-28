@@ -115,6 +115,7 @@ void Logger::startLog(const char* path,const char* identifier){
 }
 
 void Logger::logg(const std::string message){
+    if(Logger::logger_instance == NULL) { Logger::logger_instance=new Logger(LOGGER_DEFAULT_PATH,"Logger");}
     Logger::logger_instance->loggMessage(formatMessage(logger_instance->identifier,message));
 }
 

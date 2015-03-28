@@ -52,6 +52,8 @@ void crearMuseo(){
         exit(1);   
     }
     
+    
+    //TODO cargar configuracion de memoria un archivo
     Logger::logg("Inicializando la memoria compartida");
     myMuseum->estaAbierto=false;
     myMuseum->personasAdentro=0;
@@ -79,6 +81,7 @@ void crearMuseo(){
 
 
 void crearPuertas(){
+    //todo cargar cantidad de puertas desde archivo
     int childpid;
     for (int i=0;i<CANT_PUERTAS;i++){
         
@@ -99,6 +102,7 @@ void crearPuertas(){
         }
         
         
+        //TODO Preguntar sobre el pasaje del parametro
         Logger::logg("Creando el proceso puerta");
         //preparo los parametros para la puerta
         if ((childpid=fork())<0){
@@ -125,8 +129,8 @@ int main(int argc, char** argv) {
     crearMuseo();
     crearPuertas();
     crearClientes();
-    
     Logger::closeLogger();
+    
     return 0;
 }
 

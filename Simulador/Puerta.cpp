@@ -14,6 +14,7 @@
 #include <sys/shm.h>
 #include <sys/msg.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 using namespace std;
 
@@ -67,5 +68,12 @@ int main(int argc, char** argv) {
         exit(1);   
     }
     
-    
+    //TODO - poner condicion
+    while(true){ 
+        
+        
+        
+        
+    }
+
 }
