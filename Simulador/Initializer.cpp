@@ -114,7 +114,7 @@ void crearPuertas(){
         std::stringstream ss;
         ss<<i;
         Logger::logg(string("Creando la puerta nro ")+ss.str());
-        
+        /*
         //creo las colas para la puerta
         Logger::logg("Creando la cola de entrada");
         int cola;
@@ -128,7 +128,7 @@ void crearPuertas(){
             Logger::loggError("Error al crear la cola de respuesta");
             exit(1);   
         }
-        
+        */
         //TODO Preguntar sobre el pasaje del parametro
         Logger::logg("Creando el proceso puerta");
         //preparo los parametros para la puerta

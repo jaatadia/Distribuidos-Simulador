@@ -56,7 +56,7 @@ int main(int argc, char** argv) {
         Logger::loggError("Error al atachearse a la memoria compartida");
         exit(1);   
     }
-    
+   /*
     //busco las colas
     Logger::logg("Buscando la cola de entrada");
     int colaEntrada,colaRespuesta;
@@ -70,12 +70,11 @@ int main(int argc, char** argv) {
         Logger::loggError("Error al encontrar la cola de respuesta");
         exit(1);   
     }
-    
+    */
     srand(time(NULL));
     for (int i=0;i<100;i++){rand();};
     
     
-    //TODO - poner condicion
     for(int i=0;i<personas;i++){ 
         
         usleep(rand()%100000);

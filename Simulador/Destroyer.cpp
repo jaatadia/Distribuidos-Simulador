@@ -39,7 +39,7 @@ void killIPCs(){
     }else if ( shmctl(memid,IPC_RMID,NULL) == -1){
         Logger::loggError("Error eliminando la memoria compartida");
     } 
-    
+    /*
     int result;
     if( (result = Parser::getIntParam(MUSEO_PUERTAS)) < 0){
         Logger::loggError("Error obteniendo la cantidad de puertas");
@@ -68,7 +68,7 @@ void killIPCs(){
             }
             
         }
-    }   
+    } */  
 }
 
 void killProcess(){
