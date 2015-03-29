@@ -7,10 +7,12 @@
 
 #include "Logger.h"
 
+#include <sys/file.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <sys/time.h>
+
 #include <fcntl.h>
-#include <sys/file.h>
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -79,6 +81,8 @@ Logger::~Logger() {
 // dd/mm/aaa hh:mm:ss
 std::string getTimeStamp(){
     	time_t now = time(0);
+        struct timeval tv;
+        gettimeofday(&tv,NULL);
 	tm* ltm = localtime(&now);
 	std::stringstream ss;
         ss << std::setfill('0') << std::setw(2) << ltm->tm_mday;
@@ -92,6 +96,10 @@ std::string getTimeStamp(){
         ss << std::setfill('0') << std::setw(2) << ltm->tm_min;
         ss << ":";
         ss << std::setfill('0') << std::setw(2) << ltm->tm_sec;
+        ss << ":";
+        ss << std::setfill('0') << std::setw(3) << int((tv.tv_usec)/1000) ;
+        ss << ":";
+        ss << std::setfill('0') << std::setw(3) << tv.tv_usec - int((tv.tv_usec)/1000)*1000 ;
 
 	return ss.str();
 }

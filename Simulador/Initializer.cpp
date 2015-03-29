@@ -97,10 +97,18 @@ void crearPuertas(){
     //todo cargar cantidad de puertas desde archivo
     int childpid;
     int result = 0;
+    int personas = 0;
     if((result = Parser::getIntParam(MUSEO_PUERTAS)) < 0 ){
         Logger::loggError("Error al leer la configuracion de la cantidad de puertas");
         exit(1);   
     }
+    
+    if((personas = Parser::getIntParam(PUERTAS_PERSONAS)) < 0 ){
+        Logger::loggError("Error al leer la configuracion de la cantidad personas por puerta");
+        exit(1);   
+    }
+    std::stringstream per;
+    per << personas;
     
     for (int i=0;i<result;i++){
         std::stringstream ss;
@@ -128,7 +136,7 @@ void crearPuertas(){
             Logger::loggError(string("Error al crear la puerta nro ") + ss.str());
             exit(1);   
         }else if (childpid == 0){
-            execlp(PATH_PUERTA_EXEC,"Puerta",ss.str().c_str(),(char*)NULL);
+            execlp(PATH_PUERTA_EXEC,"Puerta",ss.str().c_str(),per.str().c_str(),(char*)NULL);
             Logger::loggError(string("Error al cargar la imagen de ejecutable en la puerta nro ") + ss.str());
             exit(1);
         }

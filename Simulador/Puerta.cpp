@@ -23,15 +23,16 @@ using namespace std;
 
 #define PUERTA_ID "PUERTA"
 
-//en arv[1] el numero de puerta
+//en argv[1] el numero de puerta, argv[2] la cantidad de personas
 int main(int argc, char** argv) {
-    if (argc == 1){
+    if (argc != 3 ){
         Logger::startLog(LOGGER_DEFAULT_PATH,PUERTA_ID);
-        Logger::loggError("No se paso el numero de puerta correcto como parametro");
+        Logger::loggError("No se pasaron los parametros correctos 1: numero de puerta 2: cantidad de personas");
         exit(1);
     }
     
     int numero = atoi(argv[1]);
+    int personas = atoi(argv[2]);
     string puertaid=string(PUERTA_ID)+argv[1];
     Logger::startLog(LOGGER_DEFAULT_PATH,puertaid.c_str());
     
@@ -75,7 +76,7 @@ int main(int argc, char** argv) {
     
     
     //TODO - poner condicion
-    while(true){ 
+    for(int i=0;i<personas;i++){ 
         
         usleep(rand()%100000);
         
