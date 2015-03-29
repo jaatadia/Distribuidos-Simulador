@@ -16,6 +16,7 @@
 #define LOGGER_DEFAULT_PATH  "./log.txt"
 #define PATH_PUERTA_EXEC "./Puerta"
 #define DIRECTORIO_IPC "/home/knoppix/Atadia/Simulador"
+#define MUSEO_MAX 300
 
 #define PERMISOS 0660
 

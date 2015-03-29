@@ -5,16 +5,17 @@
  * Created on March 26, 2015, 2:00 PM
  */
 
-#include <cstdlib>
+#include <stdlib.h>
 #include <iostream>
-#include "Logger.h"
-#include "Simulador.h"
-#include "semaforo.h"
 #include <sys/ipc.h>
 #include <sys/shm.h>
 #include <sys/msg.h>
 #include <sys/types.h>
 #include <unistd.h>
+
+#include "Logger.h"
+#include "Simulador.h"
+#include "semaforo.h"
 
 using namespace std;
 
@@ -68,12 +69,41 @@ int main(int argc, char** argv) {
         exit(1);   
     }
     
+    srand(time(NULL));
+    for (int i=0;i<100;i++){rand();};
+    
+    
     //TODO - poner condicion
     while(true){ 
         
+        usleep(rand()*10);
         
+        if(p(mutex)==-1){
+            Logger::loggError("Error al pedir el mutex");
+            exit(1);   
+        }
         
-        
+        if (!myMuseum->estaAbierto){
+            while (myMuseum->personasAdentro > 0){
+                myMuseum->personasAdentro--;
+            }
+        }else{
+            
+            if(rand()%2==0){//entrar
+                if(myMuseum->personasAdentro<MUSEO_MAX){
+                    myMuseum->personasAdentro++;
+                }
+            }else{//salir
+                if(myMuseum->personasAdentro>0){
+                    myMuseum->personasAdentro--;
+                }
+            }
+            
+            if(v(mutex)==-1){
+                Logger::loggError("Error al liberar el mutex");
+                exit(1);   
+            }    
+        }
     }
 
 }
