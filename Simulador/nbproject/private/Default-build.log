@@ -1,0 +1,28 @@
+mkdir -p ./Release
+mkdir -p ./Objects
+
+#-----------compilando-----------
+
+#1.compilando dependencias
+for i in semaforo.o Logger.o; do g++ -Wall -g ./Simulador/${i%.*}.cpp -c -o ./Objects/$i;done 
+In file included from ./Simulador/semaforo.cpp:3:0:
+./Simulador/Simulador.h:21:21: warning: ‘PARAM_PUERTA’ defined but not used [-Wunused-variable]
+ static const char*  PARAM_PUERTA[2] = {"0","1"};
+                     ^
+#2.creando ejecutable
+var="";for i in semaforo.o Logger.o; do var="$var ./Objects/$i";done;g++ -Wall -g $var ./Simulador/Initializer.cpp -o ./Release/Initializer
+
+#-----------compilando-----------
+
+#1.compilando dependencias
+for i in semaforo.o Logger.o; do g++ -Wall -g ./Simulador/${i%.*}.cpp -c -o ./Objects/$i;done 
+In file included from ./Simulador/semaforo.cpp:3:0:
+./Simulador/Simulador.h:21:21: warning: ‘PARAM_PUERTA’ defined but not used [-Wunused-variable]
+ static const char*  PARAM_PUERTA[2] = {"0","1"};
+                     ^
+#2.creando ejecutable
+var="";for i in semaforo.o Logger.o; do var="$var ./Objects/$i";done;g++ -Wall -g $var ./Simulador/Puerta.cpp -o ./Release/Puerta
+In file included from ./Simulador/Puerta.cpp:11:0:
+./Simulador/Simulador.h:21:21: warning: ‘PARAM_PUERTA’ defined but not used [-Wunused-variable]
+ static const char*  PARAM_PUERTA[2] = {"0","1"};
+                     ^
