@@ -12,6 +12,7 @@
 #include <sys/msg.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <sstream>
 
 #include "Logger.h"
 #include "Simulador.h"
@@ -76,28 +77,43 @@ int main(int argc, char** argv) {
     //TODO - poner condicion
     while(true){ 
         
-        usleep(rand()*10);
+        usleep(rand()%100000);
         
+        Logger::logg("Esperando el control de la puerta");
         if(p(mutex)==-1){
             Logger::loggError("Error al pedir el mutex");
             exit(1);   
         }
+        Logger::logg("Consegui el control de la puerta");
         
         if (!myMuseum->estaAbierto){
             while (myMuseum->personasAdentro > 0){
                 myMuseum->personasAdentro--;
+                std::stringstream ss;
+                ss<<myMuseum->personasAdentro;
+                Logger::logg("Salio una persona. Personas adentro: "+ss.str());
             }
         }else{
-            
+            std::string mensaje;
+            std::stringstream ss;
             if(rand()%2==0){//entrar
                 if(myMuseum->personasAdentro<MUSEO_MAX){
                     myMuseum->personasAdentro++;
+                    mensaje="Entro una persona.";
+                }else{
+                    mensaje="No pudo entrar la persona, el museo esta lleno.";
                 }
+       
             }else{//salir
                 if(myMuseum->personasAdentro>0){
                     myMuseum->personasAdentro--;
+                    mensaje="Salio una persona.";
+                }else{
+                    mensaje="No pudo salir la persona, el museo esta vacio.";
                 }
             }
+            ss<<myMuseum->personasAdentro;
+            Logger::logg(mensaje+" Personas adentro: "+ss.str());
             
             if(v(mutex)==-1){
                 Logger::loggError("Error al liberar el mutex");
