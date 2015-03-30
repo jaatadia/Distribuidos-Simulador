@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
         exit(1);
     }
     
-    int numero = atoi(argv[1]);
+    //int numero = atoi(argv[1]);
     int personas = atoi(argv[2]);
     string puertaid=string(PUERTA_ID)+argv[1];
     Logger::startLog(LOGGER_DEFAULT_PATH,puertaid.c_str());

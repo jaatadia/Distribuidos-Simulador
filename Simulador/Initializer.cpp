@@ -156,7 +156,7 @@ int main(int argc, char** argv) {
     crearCarpeta();
     crearMuseo();
     crearPuertas();
-    crearClientes();
+    //crearClientes();
     
     Logger::closeLogger();
     
